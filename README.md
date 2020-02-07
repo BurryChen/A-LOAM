@@ -62,3 +62,6 @@ The build process may take a while depends on your machine. After that, run `./r
 ## 6.Acknowledgements
 Thanks for LOAM(J. Zhang and S. Singh. LOAM: Lidar Odometry and Mapping in Real-time) and [LOAM_NOTED](https://github.com/cuitaixiang/LOAM_NOTED).
 
+## 7.Kylin Backpack
+roslaunch aloam_velodyne aloam_velodyne_VLP_16.launch
+rosbag play --clock '/home/whu/data/WHUKylinBackpack/3D_VLP16_MYNT/vlp16_2_imu_mynt_2020-01-11-15-31-56.bag'       /ns1/horizontal_laser_3d:=/velodyne_points    -r  1.0

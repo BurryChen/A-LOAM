@@ -298,11 +298,11 @@ int main(int argc, char** argv)
 				       matrix_tmp(2,0),matrix_tmp(2,1),matrix_tmp(2,2)));
     tf_velo2cam.setOrigin(tf::Vector3(matrix_tmp(0,3),matrix_tmp(1,3),matrix_tmp(2,3)));
 	
-    ros::Subscriber subLaserOdometry = n.subscribe<nav_msgs::Odometry>("/laser_odom_to_init", 1024, WriteLaserOdometry);
-    //ros::Subscriber subLaserOdometry = n.subscribe<nav_msgs::Odometry>("/odom", 1024, WriteLaserOdometry);
+    //ros::Subscriber subLaserOdometry = n.subscribe<nav_msgs::Odometry>("/laser_odom_to_init", 1024, WriteLaserOdometry);
+    ros::Subscriber subLaserOdometry = n.subscribe<nav_msgs::Odometry>("/odom", 1024, WriteLaserOdometry);
     ros::Subscriber subOdomAftMapped = n.subscribe<nav_msgs::Odometry>("/aft_mapped_to_init", 1024, WriteOdomOdomAftMapped );
     ros::Subscriber subOdomAftMappedHighFrec = n.subscribe<nav_msgs::Odometry>("/aft_mapped_to_init_high_frec", 1024, WriteOdomAftMappedHighFrec);
     
-    std::thread publish_data_process{pub_data_process};
+    //std::thread publish_data_process{pub_data_process};
     ros::spin();
 }

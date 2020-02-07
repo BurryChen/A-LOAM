@@ -230,12 +230,22 @@ void laserOdometryHandler(const nav_msgs::Odometry::ConstPtr &laserOdometry)
 
 void process()
 {
+        double time_sum=0;
+	int mappingCount=0;
 	while(1)
 	{
 		while (!cornerLastBuf.empty() && !surfLastBuf.empty() &&
 			!fullResBuf.empty() && !odometryBuf.empty())
 		{
 			mBuf.lock();
+			while (!cornerLastBuf.empty() && odometryBuf.front()->header.stamp.toSec() > cornerLastBuf.front()->header.stamp.toSec())
+		                cornerLastBuf.pop();
+			if (cornerLastBuf.empty())
+			{
+				mBuf.unlock();
+				break;
+			}
+			
 			while (!odometryBuf.empty() && odometryBuf.front()->header.stamp.toSec() < cornerLastBuf.front()->header.stamp.toSec())
 				odometryBuf.pop();
 			if (odometryBuf.empty())
@@ -850,6 +860,8 @@ void process()
 			printf("mapping pub time %f ms \n", t_pub.toc());
 
 			printf("whole mapping time %f ms +++++\n", t_whole.toc());
+		        time_sum+=t_whole.toc();mappingCount++;
+			printf("mappingCount %d & avg mapping time %f ms ++++++++++++++++++++++\n",mappingCount, time_sum/mappingCount);
 
 			nav_msgs::Odometry odomAftMapped;
 			odomAftMapped.header.frame_id = "/camera_init";
@@ -889,7 +901,7 @@ void process()
 		}
 		std::chrono::milliseconds dura(2);
         std::this_thread::sleep_for(dura);
-	}
+}
 }
 
 int main(int argc, char **argv)
@@ -909,8 +921,9 @@ int main(int argc, char **argv)
 
 	ros::Subscriber subLaserCloudSurfLast = nh.subscribe<sensor_msgs::PointCloud2>("/laser_cloud_surf_last", 100, laserCloudSurfLastHandler);
 
-	ros::Subscriber subLaserOdometry = nh.subscribe<nav_msgs::Odometry>("/laser_odom_to_init", 100, laserOdometryHandler);
-
+	//ros::Subscriber subLaserOdometry = nh.subscribe<nav_msgs::Odometry>("/laser_odom_to_init", 100, laserOdometryHandler);
+	ros::Subscriber subLaserOdometry = nh.subscribe<nav_msgs::Odometry>("/odom", 100, laserOdometryHandler);
+	
 	ros::Subscriber subLaserCloudFullRes = nh.subscribe<sensor_msgs::PointCloud2>("/velodyne_cloud_3", 100, laserCloudFullResHandler);
 
 	pubLaserCloudSurround = nh.advertise<sensor_msgs::PointCloud2>("/laser_cloud_surround", 100);

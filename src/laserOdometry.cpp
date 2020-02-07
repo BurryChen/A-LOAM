@@ -216,6 +216,7 @@ int main(int argc, char **argv)
 
     int frameCount = 0;
     ros::Rate rate(100);
+    int warnCount=0;
 
     while (ros::ok())
     {
@@ -269,7 +270,7 @@ int main(int argc, char **argv)
                 systemInited = true;
                 std::cout << "Initialization finished \n";
             }
-            else
+            /*else
             {
                 int cornerPointsSharpNum = cornerPointsSharp->points.size();
                 int surfPointsFlatNum = surfPointsFlat->points.size();
@@ -503,12 +504,12 @@ int main(int argc, char **argv)
 
                 t_w_curr = t_w_curr + q_w_curr * t_last_curr;
                 q_w_curr = q_w_curr * q_last_curr;
-            }
-
+            }*/
+            
             TicToc t_pub;
 
             // publish odometry
-            nav_msgs::Odometry laserOdometry;
+            /*nav_msgs::Odometry laserOdometry;
             laserOdometry.header.frame_id = "/camera_init";
             laserOdometry.child_frame_id = "/laser_odom";
             laserOdometry.header.stamp = ros::Time().fromSec(timeSurfPointsLessFlat);
@@ -527,7 +528,7 @@ int main(int argc, char **argv)
             laserPath.header.stamp = laserOdometry.header.stamp;
             laserPath.poses.push_back(laserPose);
             laserPath.header.frame_id = "/camera_init";
-            pubLaserPath.publish(laserPath);
+            pubLaserPath.publish(laserPath);*/
 
             // transform corner features and plane features to the scan end point
             if (0)
@@ -592,7 +593,7 @@ int main(int argc, char **argv)
             printf("publication time %f ms \n", t_pub.toc());
             printf("whole laserOdometry time %f ms \n \n", t_whole.toc());
             if(t_whole.toc() > 100)
-                ROS_WARN("odometry process over 100ms");
+                ROS_WARN("odometry process over 100ms: %d",warnCount++);
 
             frameCount++;
         }

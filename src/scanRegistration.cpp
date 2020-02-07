@@ -124,6 +124,9 @@ void laserCloudHandler(const sensor_msgs::PointCloud2ConstPtr &laserCloudMsg)
             return;
     }
 
+    if(laserCloudMsg->header.stamp ==ros::Time(999.0)) return;//for erro in kitti bag play 
+    std::cout<<"--------------------stamp"<<laserCloudMsg->header.stamp<<std::endl;
+    
     TicToc t_whole;
     TicToc t_prepare;
     std::vector<int> scanStartInd(N_SCANS, 0);
