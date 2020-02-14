@@ -591,7 +591,7 @@ void process()
 						pointAssociateToMap(&pointOri, &pointSel);
 						kdtreeCornerFromMap->nearestKSearch(pointSel, 5, pointSearchInd, pointSearchSqDis); 
 
-						if (pointSearchSqDis[4] < 1.0)
+						if (pointSearchSqDis[4] < 0.5)
 						{ 
 							std::vector<Eigen::Vector3d> nearCorners;
 							Eigen::Vector3d center(0, 0, 0);
@@ -659,7 +659,7 @@ void process()
 
 						Eigen::Matrix<double, 5, 3> matA0;
 						Eigen::Matrix<double, 5, 1> matB0 = -1 * Eigen::Matrix<double, 5, 1>::Ones();
-						if (pointSearchSqDis[4] < 1.0)
+						if (pointSearchSqDis[4] < 0.5)
 						{
 							
 							for (int j = 0; j < 5; j++)

@@ -37,7 +37,7 @@ struct LidarEdgeFactor
 
 		residual[0] = nu.x() / de.norm();
 		residual[1] = nu.y() / de.norm();
-		residual[2] = nu.z() / de.norm();
+		residual[2] = 10.0*(nu.z() / de.norm());
 
 		return true;
 	}
@@ -120,7 +120,7 @@ struct LidarPlaneNormFactor
 		point_w = q_w_curr * cp + t_w_curr;
 
 		Eigen::Matrix<T, 3, 1> norm(T(plane_unit_norm.x()), T(plane_unit_norm.y()), T(plane_unit_norm.z()));
-		residual[0] = norm.dot(point_w) + T(negative_OA_dot_norm);
+		residual[0] = 10.0*(norm.dot(point_w) + T(negative_OA_dot_norm));
 		return true;
 	}
 
@@ -156,7 +156,7 @@ struct LidarDistanceFactor
 
 		residual[0] = point_w.x() - T(closed_point.x());
 		residual[1] = point_w.y() - T(closed_point.y());
-		residual[2] = point_w.z() - T(closed_point.z());
+		residual[2] = 10.0*(point_w.z() - T(closed_point.z()));
 		return true;
 	}
 
