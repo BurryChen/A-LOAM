@@ -587,7 +587,7 @@ void process()
 					for (int i = 0; i < laserCloudCornerStackNum; i++)
 					{
 						pointOri = laserCloudCornerStack->points[i];
-						//double sqrtDis = pointOri.x * pointOri.x + pointOri.y * pointOri.y + pointOri.z * pointOri.z;
+						double sqrtDis = pointOri.x * pointOri.x + pointOri.y * pointOri.y + pointOri.z * pointOri.z;
 						pointAssociateToMap(&pointOri, &pointSel);
 						kdtreeCornerFromMap->nearestKSearch(pointSel, 5, pointSearchInd, pointSearchSqDis); 
 
@@ -630,7 +630,7 @@ void process()
 								corner_num++;	
 							}							
 						}
-						/*
+						/**/
 						else if(pointSearchSqDis[4] < 0.01 * sqrtDis)
 						{
 							Eigen::Vector3d center(0, 0, 0);
@@ -646,14 +646,14 @@ void process()
 							ceres::CostFunction *cost_function = LidarDistanceFactor::Create(curr_point, center);
 							problem.AddResidualBlock(cost_function, loss_function, parameters, parameters + 4);
 						}
-						*/
+						
 					}
 
 					int surf_num = 0;
 					for (int i = 0; i < laserCloudSurfStackNum; i++)
 					{
 						pointOri = laserCloudSurfStack->points[i];
-						//double sqrtDis = pointOri.x * pointOri.x + pointOri.y * pointOri.y + pointOri.z * pointOri.z;
+						double sqrtDis = pointOri.x * pointOri.x + pointOri.y * pointOri.y + pointOri.z * pointOri.z;
 						pointAssociateToMap(&pointOri, &pointSel);
 						kdtreeSurfFromMap->nearestKSearch(pointSel, 5, pointSearchInd, pointSearchSqDis);
 
@@ -695,7 +695,7 @@ void process()
 								surf_num++;
 							}
 						}
-						/*
+						/**/
 						else if(pointSearchSqDis[4] < 0.01 * sqrtDis)
 						{
 							Eigen::Vector3d center(0, 0, 0);
@@ -711,7 +711,7 @@ void process()
 							ceres::CostFunction *cost_function = LidarDistanceFactor::Create(curr_point, center);
 							problem.AddResidualBlock(cost_function, loss_function, parameters, parameters + 4);
 						}
-						*/
+						
 					}
 
 					//printf("corner num %d used corner num %d \n", laserCloudCornerStackNum, corner_num);
