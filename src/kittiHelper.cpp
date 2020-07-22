@@ -6,9 +6,9 @@
 #include <iterator>
 #include <string>
 #include <vector>
-#include <opencv2/opencv.hpp>
+#include <opencv4/opencv2/opencv.hpp>
 #include <image_transport/image_transport.h>
-#include <opencv2/highgui/highgui.hpp>
+#include <opencv4/opencv2/highgui/highgui.hpp>
 #include <nav_msgs/Odometry.h>
 #include <nav_msgs/Path.h>
 #include <ros/ros.h>
@@ -98,9 +98,9 @@ int pub_data_process()
         float timestamp = stof(line);
         std::stringstream left_image_path, right_image_path;
         left_image_path << dataset_folder << "sequences/" + sequence_number + "/image_0/" << std::setfill('0') << std::setw(6) << line_num << ".png";
-        cv::Mat left_image = cv::imread(left_image_path.str(), CV_LOAD_IMAGE_GRAYSCALE);
+        cv::Mat left_image = cv::imread(left_image_path.str(), cv::IMREAD_GRAYSCALE);
         right_image_path << dataset_folder << "sequences/" + sequence_number + "/image_1/" << std::setfill('0') << std::setw(6) << line_num << ".png";
-        cv::Mat right_image = cv::imread(left_image_path.str(), CV_LOAD_IMAGE_GRAYSCALE);
+        cv::Mat right_image = cv::imread(left_image_path.str(), cv::IMREAD_GRAYSCALE);
 
         std::getline(ground_truth_file, line);
         std::stringstream pose_stream(line);

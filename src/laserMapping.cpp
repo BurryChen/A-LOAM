@@ -826,7 +826,7 @@ void process()
 				sensor_msgs::PointCloud2 laserCloudSurround3;
 				pcl::toROSMsg(*laserCloudSurround, laserCloudSurround3);
 				laserCloudSurround3.header.stamp = ros::Time().fromSec(timeLaserOdometry);
-				laserCloudSurround3.header.frame_id = "/camera_init";
+				laserCloudSurround3.header.frame_id = "camera_init";
 				pubLaserCloudSurround.publish(laserCloudSurround3);
 			}
 
@@ -841,7 +841,7 @@ void process()
 				sensor_msgs::PointCloud2 laserCloudMsg;
 				pcl::toROSMsg(laserCloudMap, laserCloudMsg);
 				laserCloudMsg.header.stamp = ros::Time().fromSec(timeLaserOdometry);
-				laserCloudMsg.header.frame_id = "/camera_init";
+				laserCloudMsg.header.frame_id = "camera_init";
 				pubLaserCloudMap.publish(laserCloudMsg);
 			}
 
@@ -854,7 +854,7 @@ void process()
 			sensor_msgs::PointCloud2 laserCloudFullRes3;
 			pcl::toROSMsg(*laserCloudFullRes, laserCloudFullRes3);
 			laserCloudFullRes3.header.stamp = ros::Time().fromSec(timeLaserOdometry);
-			laserCloudFullRes3.header.frame_id = "/camera_init";
+			laserCloudFullRes3.header.frame_id = "camera_init";
 			pubLaserCloudFullRes.publish(laserCloudFullRes3);
 
 			printf("mapping pub time %f ms \n", t_pub.toc());
